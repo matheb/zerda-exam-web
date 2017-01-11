@@ -16,11 +16,11 @@ function validator(feedback, scale, email){
     };
   };
   countNiceWords(feedbackWords, lista);
-  if(checkMail && scale>= 0 && scale < 10 && counter >= 3){
+  if(checkMail && scale >= 10 && counter >= 3){
     return true;
   } else {
     return false;
   };
 };
 
-module.exports(validator);
+module.exports = validator;
