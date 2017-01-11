@@ -33,7 +33,6 @@ app.get('/', function(req, res) {
  app.post('/exam', function add(req, resp) {
   if (validation(req.body.feedback, req.body.scale, req.body.email)){
     con.query('SELECT project_name FROM projects', function(err,rows){
-      console.log(rows);
       if(err) {
         console.log(err.toString());
         return;
