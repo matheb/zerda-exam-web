@@ -1,5 +1,6 @@
 var sendButton = document.querySelector('button');
 var result = document.querySelector('.list');
+var displayLoading = document.querySelector('.loading');
 
 
 sendButton.addEventListener('click', function(){
@@ -8,6 +9,7 @@ sendButton.addEventListener('click', function(){
 })
 
 function postAnswer() {
+  result.innerHTML = '';
   var textValue =  document.querySelector('textarea').value;
   var scaleValue =  document.querySelector('#scale').value;
   var emailValue =  document.querySelector('#email').value;
@@ -18,17 +20,27 @@ function postAnswer() {
     xhr.send(JSON.stringify({'feedback': textValue, 'scale': scaleValue, 'email': emailValue}));
     xhr.onreadystatechange = function (){
       if (xhr.readyState === XMLHttpRequest.DONE){
-        console.log(xhr.response);
+        displayLoading.style.visibility = 'hidden';
         if (xhr.response.includes("projects")){
-          result.textContent = JSON.parse(xhr.response)['projects'];
+          listItems = JSON.parse(xhr.response)['projects'];
+          drawList(listItems);
         } else {
           result.textContent = JSON.parse(xhr.response)['text'];
         }
       } else if (xhr.readyState === XMLHttpRequest.LOADING) {
+        displayLoading.style.visibility = 'visible';
         setInterval(console.log('LOADING'), 1000);
       };
     };
   } else {
     alert('Please add valid input!');
+  };
+};
+
+function drawList(listItems) {
+  for ( var i = 0; i < listItems.length; i++) {
+    var newItem = document.createElement('li');
+    newItem.textContent = listItems[i];
+    result.appendChild(newItem);
   };
 };
