@@ -26,7 +26,7 @@ function postAnswer() {
           drawList(listItems);
         } else {
           result.textContent = JSON.parse(xhr.response)['text'];
-        }
+        };
       } else if (xhr.readyState === XMLHttpRequest.LOADING) {
         displayLoading.style.visibility = 'visible';
         setInterval(console.log('LOADING'), 1000);
